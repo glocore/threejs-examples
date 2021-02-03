@@ -42,6 +42,19 @@ light.position.set(-1, 2, 4);
 
 scene.add(light);
 
+const resizeRendererToDisplaySize = (renderer) => {
+  const canvas = renderer.domElement;
+  const width = canvas.clientWidth;
+  const height = canvas.clientHeight;
+  const needsResize = width !== canvas.width || height !== canvas.height;
+
+  if (needsResize) {
+    renderer.setSize(width, height, false);
+  }
+
+  return needsResize;
+};
+
 const render = (time) => {
   time *= 0.001; // time in seconds
 
@@ -51,6 +64,12 @@ const render = (time) => {
     cube.rotation.x = rotation;
     cube.rotation.y = rotation;
   });
+
+  if (resizeRendererToDisplaySize(renderer)) {
+    const canvas = renderer.domElement;
+    camera.aspect = canvas.clientWidth / canvas.clientHeight;
+    camera.updateProjectionMatrix();
+  }
 
   renderer.render(scene, camera);
   requestAnimationFrame(render);
