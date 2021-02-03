@@ -44,8 +44,9 @@ scene.add(light);
 
 const resizeRendererToDisplaySize = (renderer) => {
   const canvas = renderer.domElement;
-  const width = canvas.clientWidth;
-  const height = canvas.clientHeight;
+  const pixelRatio = window.devicePixelRatio;
+  const width = (canvas.clientWidth * pixelRatio) | 0;
+  const height = (canvas.clientHeight * pixelRatio) | 0;
   const needsResize = width !== canvas.width || height !== canvas.height;
 
   if (needsResize) {
